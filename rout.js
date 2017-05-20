@@ -36,8 +36,27 @@
     var RoutObject - {"link":"/link/mask",function};
   */
   Rout.prototype.set404=function(RoutObject){
-    this.Rout404=RoutObject;
-    return this;
+    this.Rout404=RoutObject; return this;
+  };
+  /*
+    Устанавливаем URL и вызываем обработчик
+    var Location - string '/link/page';
+  */
+  Rout.prototype.setURL=function(Location){
+    this.PathName=Location; this.trigger(); return this;
+  };
+  /*
+    Получение URL в зависимости от режима работы.
+    Hash mode - работа с hash api
+    URL mode - работа с history api
+    Path Name - ручное управление url (Сделано для node js)
+  */
+  Rout.prototype.getURL=function(){
+    var URL='';
+    if(this.HashMode==true) URL=global.location.hash.substring(1);
+    else if(this.URLMode==true) URL=global.location.pathname.substring(1);
+    else if(this.PathName.length>0) URL=this.PathName.substring(1);
+    return URL;
   };
   /*
     Перебор и поиск соответствий в исписке Routs.
@@ -45,7 +64,7 @@
   */
   Rout.prototype.trigger = function () {
     for(var index in this.Routs){
-      var LocationHash=global.location.hash.substring(1),TestRout=this.Routs[index]['link'];
+      var LocationHash=this.getURL(),TestRout=this.Routs[index]['link'];
       if(this.testLink(TestRout,LocationHash)) {
         this.addHistory(this.Routs[index], LocationHash);
         return this.CallFunction(this.Routs[index],LocationHash);
@@ -56,7 +75,7 @@
   /*
     Вызов переданого Rout.
     var RoutObject - {"link":"/link/mask",function}
-    var Link - string
+    var Link - string '/link/page';
   */
   Rout.prototype.CallFunction=function(RoutObject,Link){
     if(Link!=false) RoutObject['function'].call(this.RoutScoup(RoutObject,Link));
@@ -65,7 +84,7 @@
   /*
     Тестируем ссылку на соответствие с переданным Rout.
     var RoutObject - {"link":"/link/mask",function}
-    var Link - string
+    var Link - string '/link/page';
   */
   Rout.prototype.testLink=function(RoutLink,Link){
     return (new RegExp('^'+RoutLink.replace(/\(\:[a-z0-9]+\)/i,'')+'$','i')).test(Link);
@@ -97,7 +116,7 @@
   /*
     Добавление Rout в историю.
     var RoutObject - {"link":"/link/mask",function}
-    var Link - string
+    var Location - string '/link/page';
   */
   Rout.prototype.addHistory = function(RoutObject, Location){
       this.unActive();
@@ -130,6 +149,9 @@
   Rout.prototype.Rout404={};  //Object  {function} function for work in error 404
   Rout.prototype.Config={};   //Object  {"index":"/index"}
   Rout.prototype.History=[];  //Objects {"link":"/link/mask",function,'location':'/link/page','active':bollean}
+  Rout.prototype.PathName='';  //For work in node js server
+  Rout.prototype.HashMode=true;  //Work with window hash api
+  Rout.prototype.URLMode=false;  //Work with html5 history api (location.pathname)
   //Export
   global.RouteCross=Rout;
 })(window);
