@@ -9,7 +9,7 @@
     return this;
   };
   /*
-    Устанавливаем обработчики 
+    РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РѕР±СЂР°Р±РѕС‚С‡РёРєРё
   */
   Rout.prototype.setTriggers=function(){
     var t=this;
@@ -17,7 +17,7 @@
     if('onpopstate' in global) global.addEventListener("onpopstate", function(){t.trigger.call(t)}, false);
   };
   /*
-    Добавляем Rout элемент.
+    Р”РѕР±Р°РІР»СЏРµРј Rout СЌР»РµРјРµРЅС‚.
     var RoutObject - {"link":"/link/mask",function};
   */
   Rout.prototype.addLink=function(RoutObject){
@@ -32,7 +32,7 @@
     return this;
   };
   /*
-    Добавляем стандартный элемент страницы 404.
+    Р”РѕР±Р°РІР»СЏРµРј СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ СЌР»РµРјРµРЅС‚ СЃС‚СЂР°РЅРёС†С‹ 404.
     var RoutObject - {"link":"/link/mask",function};
   */
   Rout.prototype.set404=function(RoutObject){
@@ -40,8 +40,8 @@
     return this;
   };
   /*
-    Перебор и поиск соответствий в исписке Routs.
-    В случае если элементы небыли найдены вызывается стандартный элемент Rout404
+    РџРµСЂРµР±РѕСЂ Рё РїРѕРёСЃРє СЃРѕРѕС‚РІРµС‚СЃС‚РІРёР№ РІ РёСЃРїРёСЃРєРµ Routs.
+    Р’ СЃР»СѓС‡Р°Рµ РµСЃР»Рё СЌР»РµРјРµРЅС‚С‹ РЅРµР±С‹Р»Рё РЅР°Р№РґРµРЅС‹ РІС‹Р·С‹РІР°РµС‚СЃСЏ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ СЌР»РµРјРµРЅС‚ Rout404
   */
   Rout.prototype.trigger = function () {
     for(var index in this.Routs){
@@ -54,7 +54,7 @@
     if(typeof this.Rout404!='undefined') return this.CallFunction(this.Rout404,false);
   };
   /*
-    Вызов переданого Rout.
+    Р’С‹Р·РѕРІ РїРµСЂРµРґР°РЅРѕРіРѕ Rout.
     var RoutObject - {"link":"/link/mask",function}
     var Link - string
   */
@@ -63,7 +63,7 @@
     else RoutObject['function'].call({'error':404,'msg':'WARNING: no link established'});
   }
   /*
-    Тестируем ссылку на соответствие с переданным Rout.
+    РўРµСЃС‚РёСЂСѓРµРј СЃСЃС‹Р»РєСѓ РЅР° СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ СЃ РїРµСЂРµРґР°РЅРЅС‹Рј Rout.
     var RoutObject - {"link":"/link/mask",function}
     var Link - string
   */
@@ -71,10 +71,10 @@
     return (new RegExp('^'+RoutLink.replace(/\(\:[a-z0-9]+\)/i,'')+'$','i')).test(Link);
   };
   /*
-    Разбираем url для получения параметров из url.
-    URL должен быть строковым или соотвествовать JavaScript RegExp за исклюсчением вставок вида (:varName) определяющих имена переменных в которые будут передаваться данные из url.
+    Р Р°Р·Р±РёСЂР°РµРј url РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ РёР· url.
+    URL РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ СЃС‚СЂРѕРєРѕРІС‹Рј РёР»Рё СЃРѕРѕС‚РІРµСЃС‚РІРѕРІР°С‚СЊ JavaScript RegExp Р·Р° РёСЃРєР»СЋСЃС‡РµРЅРёРµРј РІСЃС‚Р°РІРѕРє РІРёРґР° (:varName) РѕРїСЂРµРґРµР»СЏСЋС‰РёС… РёРјРµРЅР° РїРµСЂРµРјРµРЅРЅС‹С… РІ РєРѕС‚РѕСЂС‹Рµ Р±СѓРґСѓС‚ РїРµСЂРµРґР°РІР°С‚СЊСЃСЏ РґР°РЅРЅС‹Рµ РёР· url.
     var RoutObject - {"link":"/link/mask",function}
-    var Link - string (Пример: /page/(:id)[0-9]+)
+    var Link - string (РџСЂРёРјРµСЂ: /page/(:id)[0-9]+)
   */
   Rout.prototype.RoutScoup=function(RoutObject,Link){
     if(/\(\:[a-z-0-9_]+\)/i.test(RoutObject['link'])){
@@ -89,13 +89,13 @@
     } else return {};
   };
   /*
-    Получение истории.
+    РџРѕР»СѓС‡РµРЅРёРµ РёСЃС‚РѕСЂРёРё.
   */
   Rout.prototype.getHistory = function(){
       return this.History;
   };
   /*
-    Добавление Rout в историю.
+    Р”РѕР±Р°РІР»РµРЅРёРµ Rout РІ РёСЃС‚РѕСЂРёСЋ.
     var RoutObject - {"link":"/link/mask",function}
     var Link - string
   */
@@ -104,13 +104,13 @@
       var HistoryElement = RoutObject; HistoryElement['location'] = Location; HistoryElement['active'] = true; this.History[this.History.length] = HistoryElement;
   };
   /*
-    Деактивируем все элементы истории.
+    Р”РµР°РєС‚РёРІРёСЂСѓРµРј РІСЃРµ СЌР»РµРјРµРЅС‚С‹ РёСЃС‚РѕСЂРёРё.
   */
   Rout.prototype.unActive = function(){
       for(var i in this.History) this.History[i]['active'] = false;
   };
   /*
-    Перемещаем активный элемент истории и вызываем его.
+    РџРµСЂРµРјРµС‰Р°РµРј Р°РєС‚РёРІРЅС‹Р№ СЌР»РµРјРµРЅС‚ РёСЃС‚РѕСЂРёРё Рё РІС‹Р·С‹РІР°РµРј РµРіРѕ.
   */
   Rout.prototype.go = function (to) {
       this.unActive();
